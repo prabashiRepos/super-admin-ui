@@ -1,0 +1,14 @@
+image: wearepvtl/bitbucket-pipelines-git-ftp:latest
+
+pipelines:
+  custom:
+    init: # -- First time init
+      - step:
+          caches:
+            - node
+            - composer
+          script:
+            - npm install
+            - npm build
+            - cd build
+            - git ftp init -u "$FTP_USERNAME" -p "$FTP_PASSWORD" ftp://$FTP_HOST/public_html/sqillup_test
